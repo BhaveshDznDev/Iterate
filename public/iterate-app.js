@@ -12,6 +12,34 @@ let openCardId = null;
 
 const SCREENS = ['landing','onboarding','org','org-onboarding','map','dashboard','track'];
 
+// Data constants — must be initialized before the init IIFE below, since a
+// direct page load on #map/#track/#dashboard renders synchronously through
+// goTo() before any later top-level `const` in this file would otherwise run.
+const SKILL_AREAS = ['Discovery','Strategy','Execution','Stakeholders','Data','Leadership','Communication','Analytics'];
+const SUB_SKILLS = {
+  Discovery: ['User Interviews','JTBD','Problem Framing','Assumption Mapping'],
+  Strategy: ['Vision Setting','Opportunity Sizing','Competitive Analysis','Roadmapping'],
+  Execution: ['Sprint Planning','PRD Writing','Metrics Definition','Launch Planning'],
+  Stakeholders: ['Stakeholder Mapping','Influence Matrix','Executive Comms','Alignment'],
+  Data: ['SQL Basics','A/B Testing','Funnel Analysis','Dashboards'],
+  Leadership: ['1:1s','Team Rituals','Hiring','Career Ladders'],
+  Communication: ['Written Comms','Storytelling','Slide Decks','FAQs'],
+  Analytics: ['North Star','OKR Tracking','KPI Trees','Retention Analysis']
+};
+const MASTERY = ['strong','developing','unexplored'];
+
+const COACH_RESPONSES = {
+  roadmap: "Roadmap prioritization starts with your bets: what's the biggest risk to your product right now? Frame each item as a hypothesis — 'We believe that [feature] will [outcome] for [user].' Then score by impact × confidence ÷ effort.",
+  stakeholder: "For stakeholder alignment, the RACI matrix is your friend, but the real unlock is pre-alignment. Before any meeting, have 1:1s with your top skeptics. People rarely say no publicly when they've already said yes privately.",
+  discovery: "Discovery tip: switch from 'what do you want?' to 'tell me about the last time you struggled with X.' Behavior beats opinion. JTBD framing — what's the job they're hiring the product to do? — unlocks real user motivations.",
+  metric: "For metrics, start with your North Star: one number that captures the value your product delivers to users. Layer two types beneath it: leading indicators (fast, predictive) and lagging indicators (slow, confirmatory).",
+  prioritization: "Try the RICE framework: Reach × Impact × Confidence ÷ Effort. The confidence score forces you to be honest about assumptions. Don't over-engineer it — a rough ranking beats paralysis.",
+  default: "Great question. Let's think through it step by step. What's your biggest constraint right now — time, data, team alignment, or something else? That'll shape the right approach."
+};
+
+const COLS = ['Intake','Discovery','Shaping','Delivery','Live','Retirement'];
+const COL_IDS = ['intake','discovery','shaping','delivery','live','retirement'];
+
 // ═══════════════════════════════════════
 // ROUTER
 // ═══════════════════════════════════════
@@ -232,19 +260,6 @@ let mapExpanded = null;
 let mapSubNodes = [];
 let mapAnimFrame = null;
 let mapTick = 0;
-
-const SKILL_AREAS = ['Discovery','Strategy','Execution','Stakeholders','Data','Leadership','Communication','Analytics'];
-const SUB_SKILLS = {
-  Discovery: ['User Interviews','JTBD','Problem Framing','Assumption Mapping'],
-  Strategy: ['Vision Setting','Opportunity Sizing','Competitive Analysis','Roadmapping'],
-  Execution: ['Sprint Planning','PRD Writing','Metrics Definition','Launch Planning'],
-  Stakeholders: ['Stakeholder Mapping','Influence Matrix','Executive Comms','Alignment'],
-  Data: ['SQL Basics','A/B Testing','Funnel Analysis','Dashboards'],
-  Leadership: ['1:1s','Team Rituals','Hiring','Career Ladders'],
-  Communication: ['Written Comms','Storytelling','Slide Decks','FAQs'],
-  Analytics: ['North Star','OKR Tracking','KPI Trees','Retention Analysis']
-};
-const MASTERY = ['strong','developing','unexplored'];
 
 function initMap() {
   const canvas = document.getElementById('map-canvas');
@@ -581,15 +596,6 @@ function initFrameworks() {
 // ═══════════════════════════════════════
 // CHAT
 // ═══════════════════════════════════════
-const COACH_RESPONSES = {
-  roadmap: "Roadmap prioritization starts with your bets: what's the biggest risk to your product right now? Frame each item as a hypothesis — 'We believe that [feature] will [outcome] for [user].' Then score by impact × confidence ÷ effort.",
-  stakeholder: "For stakeholder alignment, the RACI matrix is your friend, but the real unlock is pre-alignment. Before any meeting, have 1:1s with your top skeptics. People rarely say no publicly when they've already said yes privately.",
-  discovery: "Discovery tip: switch from 'what do you want?' to 'tell me about the last time you struggled with X.' Behavior beats opinion. JTBD framing — what's the job they're hiring the product to do? — unlocks real user motivations.",
-  metric: "For metrics, start with your North Star: one number that captures the value your product delivers to users. Layer two types beneath it: leading indicators (fast, predictive) and lagging indicators (slow, confirmatory).",
-  prioritization: "Try the RICE framework: Reach × Impact × Confidence ÷ Effort. The confidence score forces you to be honest about assumptions. Don't over-engineer it — a rough ranking beats paralysis.",
-  default: "Great question. Let's think through it step by step. What's your biggest constraint right now — time, data, team alignment, or something else? That'll shape the right approach."
-};
-
 function initChat() {
   const msgs = document.getElementById('chat-messages');
   if (!msgs) return;
@@ -645,15 +651,15 @@ function sendChat() {
 // ═══════════════════════════════════════
 // KANBAN
 // ═══════════════════════════════════════
-const COLS = ['Backlog','In Progress','Review','Done'];
-const COL_IDS = ['backlog','in-progress','review','done'];
-
 function initKanbanData() {
   kanbanCards = [
-    { id: 'c1', title: 'Run 5 user interviews', area: 'Discovery', col: 'in-progress', progress: 40, desc: 'Conduct 5 structured user interviews focused on the onboarding experience. Capture pain points and JTBD insights.', resources: ['User Interview Script Template', 'JTBD Framework Guide', 'Synthesis Miro Board'] },
-    { id: 'c2', title: 'Write PRD for current project', area: 'Execution', col: 'backlog', progress: 0, desc: 'Draft a full PRD including context, goals, non-goals, user stories, and success metrics.', resources: ['PRD Template', 'Example PRD: Notion Docs'] },
-    { id: 'c3', title: 'Map stakeholder influence', area: 'Stakeholders', col: 'backlog', progress: 0, desc: 'Create an influence/interest matrix for all stakeholders on the Q3 roadmap initiative.', resources: ['Stakeholder Matrix Template'] },
-    { id: 'c4', title: 'Define North Star Metric', area: 'Strategy', col: 'review', progress: 80, desc: 'Align with leadership on one North Star metric. Document the supporting input metrics and rationale.', resources: ['North Star Playbook', 'Amplitude Guide to NSM'] },
+    { id: 'c1', title: 'Bulk CSV export for reports', area: 'UX', col: 'intake', progress: 0, desc: 'Users can\'t export filtered report views — they\'re screenshotting tables or asking support for manual pulls. ~15 tickets/wk from mid-market accounts.', resources: ['Intake Submission Form', 'Source: Support ticket #4821'] },
+    { id: 'c2', title: 'SOC 2 audit logging gaps', area: 'Compliance', col: 'intake', progress: 0, desc: 'Admin actions on billing settings aren\'t captured in the audit log, flagged during the SOC 2 readiness review.', resources: ['Intake Submission Form', 'Source: Compliance review'] },
+    { id: 'c3', title: 'SSO for enterprise plan', area: 'Compliance', col: 'discovery', progress: 40, desc: 'Three enterprise prospects have blocked on SAML SSO in the last quarter. Validating scope: SAML only, or also SCIM provisioning?', resources: ['Discovery Brief', 'Research Notes', 'Draft PRD (problem-focused)'] },
+    { id: 'c4', title: 'Real-time collaboration cursors', area: 'Growth', col: 'shaping', progress: 60, desc: 'Show teammates\' live cursors on the kanban board, similar to Figma. Discovery validated demand from team accounts; now defining MVP scope and rollout.', resources: ['Final PRD (draft)', 'UX Flows', 'Technical Approach Summary'] },
+    { id: 'c5', title: 'Rate limit dashboard for API', area: 'Reliability', col: 'delivery', progress: 75, desc: 'Internal + customer-facing dashboard showing API rate limit usage and 429 trends. In QA, fixing edge cases around rolling window resets.', resources: ['Implementation Tickets', 'Test Plan & Results', 'Release Readiness Approval'] },
+    { id: 'c6', title: 'Dark mode', area: 'UX', col: 'live', progress: 100, desc: 'Shipped to GA two weeks ago. Adoption at 38% of weekly actives. Monitoring for theme-related rendering bugs before calling it stable.', resources: ['Launch Announcement', 'Monitoring Dashboard', 'Post-Launch Review'] },
+    { id: 'c7', title: 'Legacy CSV importer v1', area: 'Cost', col: 'retirement', progress: 90, desc: 'Superseded by the new importer 6 months ago. Usage down to 2 accounts; migration guide sent, sunset date is end of quarter.', resources: ['Retirement Decision Record', 'Migration Guide', 'Decommission Checklist'] },
   ];
 }
 
@@ -752,22 +758,22 @@ function closeAddGoalModal() {
 }
 function saveGoal() {
   const title = document.getElementById('goal-title').value.trim();
-  if (!title) { showToast('Please enter a goal title.'); return; }
+  if (!title) { showToast('Please enter a feature title.'); return; }
   const area = document.getElementById('goal-area').value;
   const desc = document.getElementById('goal-desc').value;
   const newCard = {
     id: 'c' + Date.now(),
     title,
-    area: area.charAt(0).toUpperCase() + area.slice(1),
-    col: 'backlog',
+    area: area === 'ux' ? 'UX' : area.charAt(0).toUpperCase() + area.slice(1),
+    col: 'intake',
     progress: 0,
-    desc: desc || 'Work toward mastering this skill area.',
-    resources: []
+    desc: desc || 'Problem statement not yet written.',
+    resources: ['Intake Submission Form']
   };
   kanbanCards.push(newCard);
   closeAddGoalModal();
   renderKanban();
-  showToast('Goal added to Backlog!');
+  showToast('Feature added to Intake!');
 }
 
 // ═══════════════════════════════════════

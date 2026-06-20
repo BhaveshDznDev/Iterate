@@ -1208,7 +1208,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
 }
 .detail-panel.open { transform: translateX(0); }
 .detail-panel-header {
-  padding: 20px 20px 16px;
+  padding: 20px 64px 16px 20px;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -1269,18 +1269,20 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
   font-size: 12px;
   font-weight: 600;
 }
-.status-badge.backlog { background: var(--bg-3); color: var(--text-3); }
-.status-badge.in-progress { background: var(--amber-light); color: var(--amber); }
-.status-badge.review { background: color-mix(in oklab, var(--text) 20%, var(--surface)); color: var(--text); }
-.status-badge.done { background: var(--teal-light); color: var(--teal); }
+.status-badge.intake { background: var(--bg-3); color: var(--text-3); }
+.status-badge.discovery { background: color-mix(in oklab, var(--text) 14%, var(--surface)); color: var(--text); }
+.status-badge.shaping { background: color-mix(in oklab, var(--text) 26%, var(--surface)); color: var(--text); }
+.status-badge.delivery { background: color-mix(in oklab, var(--text) 40%, var(--surface)); color: var(--text); }
+.status-badge.live { background: var(--teal-light); color: var(--teal); }
+.status-badge.retirement { background: transparent; color: var(--text-3); border: 1px solid var(--border); }
 
 /* tag colors */
-.tag-discovery { background: color-mix(in oklab, var(--text) 8%, var(--surface)); color: var(--text); }
-.tag-strategy { background: color-mix(in oklab, var(--text) 16%, var(--surface)); color: var(--text); }
-.tag-execution { background: color-mix(in oklab, var(--text) 24%, var(--surface)); color: var(--text); }
-.tag-stakeholders { background: color-mix(in oklab, var(--text) 32%, var(--surface)); color: var(--text); }
-.tag-data { background: color-mix(in oklab, var(--text) 42%, var(--surface)); color: var(--text); }
-.tag-leadership { background: var(--text); color: var(--on-accent); }
+.tag-growth { background: color-mix(in oklab, var(--text) 8%, var(--surface)); color: var(--text); }
+.tag-compliance { background: color-mix(in oklab, var(--text) 16%, var(--surface)); color: var(--text); }
+.tag-reliability { background: color-mix(in oklab, var(--text) 24%, var(--surface)); color: var(--text); }
+.tag-ux { background: color-mix(in oklab, var(--text) 32%, var(--surface)); color: var(--text); }
+.tag-cost { background: color-mix(in oklab, var(--text) 42%, var(--surface)); color: var(--text); }
+.tag-risk { background: var(--text); color: var(--on-accent); }
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {

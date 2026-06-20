@@ -16,35 +16,35 @@ export const APP_MARKUP = `
 <!-- TOAST -->
 <div id="toast-container" aria-live="polite"></div>
 
-<!-- MODAL: Add Goal -->
-<div class="modal-overlay" id="add-goal-modal" role="dialog" aria-modal="true" aria-label="Add skill goal">
+<!-- MODAL: Add Feature -->
+<div class="modal-overlay" id="add-goal-modal" role="dialog" aria-modal="true" aria-label="Add feature">
   <div class="modal">
     <div class="modal-header">
-      <span class="modal-title">Add skill goal</span>
+      <span class="modal-title">Add feature</span>
       <button class="modal-close" id="close-modal-btn" aria-label="Close">
         <i data-lucide="x" style="width:18px;height:18px"></i>
       </button>
     </div>
     <div class="form-group">
-      <label class="form-label" for="goal-area">Skill area</label>
+      <label class="form-label" for="goal-area">Category</label>
       <select class="form-select" id="goal-area">
-        <option value="discovery">Discovery</option>
-        <option value="strategy">Strategy</option>
-        <option value="execution">Execution</option>
-        <option value="stakeholders">Stakeholders</option>
-        <option value="data">Data</option>
-        <option value="leadership">Leadership</option>
+        <option value="growth">Growth</option>
+        <option value="compliance">Compliance</option>
+        <option value="reliability">Reliability</option>
+        <option value="ux">UX</option>
+        <option value="cost">Cost</option>
+        <option value="risk">Risk</option>
       </select>
     </div>
     <div class="form-group">
-      <label class="form-label" for="goal-title">Goal title</label>
-      <input class="form-input" id="goal-title" type="text" placeholder="e.g. Run 5 user interviews">
+      <label class="form-label" for="goal-title">Feature title</label>
+      <input class="form-input" id="goal-title" type="text" placeholder="e.g. Bulk CSV export for reports">
     </div>
     <div class="form-group">
-      <label class="form-label" for="goal-desc">Description</label>
-      <textarea class="form-textarea" id="goal-desc" placeholder="What does success look like?"></textarea>
+      <label class="form-label" for="goal-desc">Problem statement</label>
+      <textarea class="form-textarea" id="goal-desc" placeholder="What's wrong, for whom, why it matters — no solutions yet."></textarea>
     </div>
-    <button class="btn-primary" id="save-goal-btn" style="width:100%">Add to Backlog</button>
+    <button class="btn-primary" id="save-goal-btn" style="width:100%">Add to Intake</button>
   </div>
 </div>
 
@@ -55,7 +55,7 @@ export const APP_MARKUP = `
       <i data-lucide="x" style="width:18px;height:18px"></i>
     </button>
     <span id="detail-tag" class="card-tag" style="font-size:12px"></span>
-    <span id="detail-status" class="status-badge backlog" style="margin-left:auto"></span>
+    <span id="detail-status" class="status-badge intake" style="margin-left:auto"></span>
   </div>
   <div class="detail-panel-body">
     <div>
@@ -64,14 +64,14 @@ export const APP_MARKUP = `
     </div>
     <div>
       <div class="form-label" style="margin-bottom:8px">Notes</div>
-      <textarea class="form-textarea" id="detail-notes" placeholder="Add notes, links, reflections..." style="min-height:120px"></textarea>
+      <textarea class="form-textarea" id="detail-notes" placeholder="Add notes, decisions, links..." style="min-height:120px"></textarea>
     </div>
     <div>
-      <div class="form-label" style="margin-bottom:10px">Resources</div>
+      <div class="form-label" style="margin-bottom:10px">Artifacts</div>
       <div id="detail-resources" style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--teal)"></div>
     </div>
     <div>
-      <div class="form-label" style="margin-bottom:10px">Move to</div>
+      <div class="form-label" style="margin-bottom:10px">Move to stage</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap" id="detail-move-btns"></div>
     </div>
   </div>
@@ -493,10 +493,10 @@ export const APP_MARKUP = `
     <!-- Track content -->
     <div class="main-content" style="overflow:hidden">
       <div class="track-header">
-        <h2>Growth Tracker</h2>
+        <h2>Feature Tracker</h2>
         <button class="btn-primary" id="open-add-goal-btn" style="font-size:13px;padding:9px 18px">
           <i data-lucide="plus" style="width:15px;height:15px"></i>
-          Add skill goal
+          Add feature
         </button>
       </div>
       <div class="kanban-board" id="kanban-board"></div>
