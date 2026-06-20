@@ -4,24 +4,33 @@
 @import "@primer/primitives/dist/css/functional/size/border.css";
 @import "@primer/primitives/dist/css/base/size/size.css";
 
-/* ── TOKENS ── */
+/* ── TOKENS (Apple-style monochrome) ── */
 :root {
-  --bg: oklch(97% 0.005 80);
-  --bg-2: oklch(94% 0.006 80);
-  --bg-3: oklch(91% 0.007 80);
-  --surface: oklch(99% 0.003 80);
-  --border: oklch(88% 0.008 80);
-  --text: oklch(14% 0.01 80);
-  --text-2: oklch(40% 0.01 80);
-  --text-3: oklch(60% 0.01 80);
-  --teal: oklch(42% 0.09 195);
-  --teal-light: oklch(92% 0.04 195);
-  --teal-mid: oklch(55% 0.09 195);
-  --amber: oklch(65% 0.14 60);
-  --amber-light: oklch(95% 0.05 60);
+  --bg: #f5f5f7;
+  --bg-2: #e8e8ed;
+  --bg-3: #d2d2d7;
+  --surface: #ffffff;
+  --border: #d2d2d7;
+  --text: #1d1d1f;
+  --text-2: #6e6e73;
+  --text-3: #86868b;
+
+  /* theme-adaptive accent: near-black in light mode, near-white in dark mode */
+  --teal: #1d1d1f;
+  --teal-mid: #424245;
+  --teal-light: #e8e8ed;
+  --on-accent: #ffffff;
+
+  /* neutral secondary accent (was amber) */
+  --amber: #6e6e73;
+  --amber-light: #e8e8ed;
   --red: oklch(55% 0.16 25);
 
-  /* Primer elevation scale (light) */
+  /* constant dark surface, used for permanently-inverted cards regardless of theme */
+  --ink: #1d1d1f;
+  --paper: #ffffff;
+
+  /* elevation scale */
   --shadow-resting-xsmall: 0 1px 1px 0 #1f23280d;
   --shadow-resting-small: 0 1px 1px 0 #1f23280a, 0 1px 2px 0 #1f232808;
   --shadow-resting-medium: 0 1px 1px 0 #25292e1a, 0 3px 6px 0 #25292e1f;
@@ -34,30 +43,36 @@
   --shadow-sm: var(--shadow-resting-small);
   --shadow-md: var(--shadow-resting-medium);
   --shadow-lg: var(--shadow-floating-medium);
-  --focus-ring: 0 0 0 3px oklch(55% 0.09 195 / 0.3);
+  --focus-ring: 0 0 0 3px oklch(14% 0.01 80 / 0.3);
 
-  /* Primer radius scale */
+  /* radius scale */
   --radius-sm: var(--borderRadius-small);
   --radius-md: var(--borderRadius-medium);
-  --radius-lg: var(--borderRadius-large);
+  --radius-lg: 20px;
   --radius-full: var(--borderRadius-full);
 
   --sidebar-w: 240px;
   --transition: 280ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 [data-theme="dark"] {
-  --bg: oklch(13% 0.01 80);
-  --bg-2: oklch(17% 0.01 80);
-  --bg-3: oklch(21% 0.01 80);
-  --surface: oklch(16% 0.01 80);
-  --border: oklch(25% 0.01 80);
-  --text: oklch(93% 0.005 80);
-  --text-2: oklch(70% 0.008 80);
-  --text-3: oklch(50% 0.008 80);
-  --teal-light: oklch(22% 0.05 195);
-  --amber-light: oklch(22% 0.06 60);
+  --bg: #000000;
+  --bg-2: #1d1d1f;
+  --bg-3: #2d2d2f;
+  --surface: #1d1d1f;
+  --border: #424245;
+  --text: #f5f5f7;
+  --text-2: #a1a1a6;
+  --text-3: #6e6e73;
 
-  /* Primer elevation scale (dark) */
+  --teal: #f5f5f7;
+  --teal-mid: #d2d2d7;
+  --teal-light: #2d2d2f;
+  --on-accent: #1d1d1f;
+
+  --amber: #a1a1a6;
+  --amber-light: #2d2d2f;
+
+  /* elevation scale */
   --shadow-resting-xsmall: 0 1px 1px 0 #010409cc;
   --shadow-resting-small: 0 1px 1px 0 #01040999, 0 1px 3px 0 #01040999;
   --shadow-resting-medium: 0 1px 1px 0 #01040966, 0 3px 6px 0 #010409cc;
@@ -65,14 +80,14 @@
   --shadow-floating-medium: 0 0 0 1px #3d444d, 0 8px 16px -4px #01040966, 0 4px 32px -4px #01040966, 0 24px 48px -12px #01040966, 0 48px 96px -24px #01040966;
   --shadow-floating-large: 0 0 0 1px #3d444d, 0 24px 48px 0 #010409;
   --shadow-inset: inset 0 1px 0 0 #0104093d;
-  --focus-ring: 0 0 0 3px oklch(55% 0.09 195 / 0.4);
+  --focus-ring: 0 0 0 3px oklch(93% 0.005 80 / 0.4);
 }
 
 /* ── RESET ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  font-family: 'Satoshi', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
   font-size: 15px;
@@ -86,10 +101,10 @@ input, textarea, select { font-family: inherit; }
 a { color: inherit; text-decoration: none; }
 
 /* ── TYPOGRAPHY ── */
-.display { font-family: 'Instrument Serif', Georgia, serif; }
-h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 400; line-height: 1.1; }
-h2 { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 400; line-height: 1.2; }
-h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; }
+.display { font-weight: 600; letter-spacing: -0.022em; }
+h1 { font-size: clamp(2.25rem, 5.5vw, 4rem); font-weight: 600; line-height: 1.07; letter-spacing: -0.022em; }
+h2 { font-size: clamp(1.5rem, 3.2vw, 2.125rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.018em; }
+h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
 
 /* ── SCREENS ── */
 .screen {
@@ -114,7 +129,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
   align-items: center;
   gap: 10px;
   background: var(--teal);
-  color: #fff;
+  color: var(--on-accent);
   padding: 10px 20px;
   font-size: 14px;
   font-weight: 500;
@@ -122,12 +137,12 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
   z-index: 100;
 }
 #slack-banner.show { display: flex; }
-#slack-banner a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+#slack-banner a { color: var(--on-accent); text-decoration: underline; text-underline-offset: 3px; }
 #slack-banner .close-banner {
   margin-left: auto;
   background: none;
   border: none;
-  color: #fff;
+  color: var(--on-accent);
   opacity: 0.7;
   font-size: 18px;
   line-height: 1;
@@ -306,7 +321,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
-  border-radius: var(--radius-md);
+  border-radius: 12px;
   font-size: 15px;
   font-weight: 500;
   box-shadow: var(--shadow-resting-xsmall);
@@ -404,11 +419,11 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
 }
 .q-heading {
   font-size: clamp(1.4rem, 3vw, 1.9rem);
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 32px;
   color: var(--text);
-  font-family: 'Instrument Serif', serif;
-  line-height: 1.3;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
 }
 .q-textarea {
   width: 100%;
@@ -441,25 +456,24 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
   transition: all var(--transition);
 }
 .chip:hover { border-color: var(--teal); color: var(--teal); }
-.chip.selected { background: var(--teal); border-color: var(--teal); color: #fff; }
+.chip.selected { background: var(--teal); border-color: var(--teal); color: var(--on-accent); }
 .chip:focus-visible { box-shadow: var(--focus-ring); outline: none; }
 .q-next-btn {
   margin-top: 32px;
   padding: 13px 28px;
   background: var(--teal);
-  color: #fff;
+  color: var(--on-accent);
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   font-size: 15px;
   font-weight: 600;
-  box-shadow: var(--shadow-resting-small);
-  transition: background var(--transition), box-shadow var(--transition), transform 0.15s;
+  transition: background var(--transition), transform 0.15s;
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
-.q-next-btn:hover { background: var(--teal-mid); box-shadow: var(--shadow-resting-medium); transform: translateY(-1px); }
-.q-next-btn:active { box-shadow: var(--shadow-inset); transform: translateY(0); }
+.q-next-btn:hover { background: var(--teal-mid); transform: translateY(-1px); }
+.q-next-btn:active { transform: translateY(0) scale(0.98); }
 .q-next-btn:focus-visible { box-shadow: var(--focus-ring); }
 
 /* Brain building */
@@ -473,7 +487,8 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
   text-align: center;
 }
 .building-heading {
-  font-family: 'Instrument Serif', serif;
+  font-weight: 600;
+  letter-spacing: -0.015em;
   font-size: 1.6rem;
   color: var(--text);
 }
@@ -523,7 +538,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
   transition: box-shadow var(--transition), transform var(--transition);
 }
 .org-card:hover { box-shadow: var(--shadow-floating-small); transform: translateY(-2px); }
-.org-card.primary { background: var(--teal); border-color: var(--teal); color: #fff; }
+.org-card.primary { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 .org-card.primary .org-card-sub { color: rgba(255,255,255,0.8); }
 .org-card-icon { font-size: 28px; margin-bottom: 4px; }
 .org-card-title { font-size: 18px; font-weight: 600; }
@@ -531,22 +546,22 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
 .org-btn {
   margin-top: 16px;
   padding: 11px 20px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   font-size: 14px;
   font-weight: 600;
   border: none;
   cursor: pointer;
-  transition: background var(--transition), box-shadow var(--transition), transform 0.15s;
+  transition: background var(--transition), transform 0.15s;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   width: fit-content;
 }
-.org-card.primary .org-btn { background: rgba(255,255,255,0.2); color: #fff; }
+.org-card.primary .org-btn { background: rgba(255,255,255,0.2); color: var(--paper); }
 .org-card.primary .org-btn:hover { background: rgba(255,255,255,0.3); }
-.org-card:not(.primary) .org-btn { background: var(--teal); color: #fff; box-shadow: var(--shadow-resting-small); }
-.org-card:not(.primary) .org-btn:hover { background: var(--teal-mid); box-shadow: var(--shadow-resting-medium); }
-.org-btn:active { transform: translateY(1px); }
+.org-card:not(.primary) .org-btn { background: var(--teal); color: var(--on-accent); }
+.org-card:not(.primary) .org-btn:hover { background: var(--teal-mid); }
+.org-btn:active { transform: scale(0.98); }
 .org-btn:focus-visible { box-shadow: var(--focus-ring); }
 
 /* org form inline */
@@ -612,7 +627,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
   background: var(--surface);
   flex-shrink: 0;
 }
-.stepper-step.active .stepper-num { border-color: var(--teal); background: var(--teal); color: #fff; }
+.stepper-step.active .stepper-num { border-color: var(--teal); background: var(--teal); color: var(--on-accent); }
 .stepper-step.done .stepper-num { border-color: var(--teal); color: var(--teal); }
 .stepper-line {
   flex: 1;
@@ -659,27 +674,26 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
 .btn-primary {
   padding: 11px 24px;
   background: var(--teal);
-  color: #fff;
+  color: var(--on-accent);
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: var(--shadow-resting-small);
-  transition: background var(--transition), box-shadow var(--transition), transform 0.15s;
+  transition: background var(--transition), transform 0.15s;
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
-.btn-primary:hover { background: var(--teal-mid); box-shadow: var(--shadow-resting-medium); transform: translateY(-1px); }
-.btn-primary:active { box-shadow: var(--shadow-inset); transform: translateY(0); }
+.btn-primary:hover { background: var(--teal-mid); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0) scale(0.98); }
 .btn-primary:focus-visible { box-shadow: var(--focus-ring); }
 .btn-ghost {
   padding: 11px 20px;
   background: none;
   color: var(--text-2);
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
@@ -710,9 +724,9 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
   z-index: 10;
   padding: 11px 20px;
   background: var(--teal);
-  color: #fff;
+  color: var(--on-accent);
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -821,7 +835,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
   width: 32px; height: 32px;
   border-radius: 50%;
   background: var(--teal);
-  color: #fff;
+  color: var(--on-accent);
   font-size: 12px;
   font-weight: 700;
   display: flex; align-items: center; justify-content: center;
@@ -890,7 +904,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
 }
 .chat-msg.user {
   background: var(--teal);
-  color: #fff;
+  color: var(--on-accent);
   border-bottom-right-radius: 4px;
   align-self: flex-end;
 }
@@ -920,18 +934,21 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
 }
 .chat-input:focus { border-color: var(--teal); outline: none; box-shadow: var(--focus-ring); }
 .chat-send {
-  padding: 9px 12px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
   background: var(--teal);
-  color: #fff;
+  color: var(--on-accent);
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   cursor: pointer;
   display: flex;
   align-items: center;
-  box-shadow: var(--shadow-resting-xsmall);
-  transition: background var(--transition), box-shadow var(--transition);
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background var(--transition);
 }
-.chat-send:hover { background: var(--teal-mid); box-shadow: var(--shadow-resting-small); }
+.chat-send:hover { background: var(--teal-mid); }
 .chat-send:focus-visible { box-shadow: var(--focus-ring); }
 .typing-indicator {
   display: flex;
@@ -973,7 +990,7 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
   font-size: 2.2rem;
   font-weight: 700;
   color: var(--text);
-  font-family: 'Instrument Serif', serif;
+  letter-spacing: -0.02em;
   line-height: 1;
   margin-bottom: 6px;
 }
@@ -1254,16 +1271,16 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 600; line-height: 1.3; 
 }
 .status-badge.backlog { background: var(--bg-3); color: var(--text-3); }
 .status-badge.in-progress { background: var(--amber-light); color: var(--amber); }
-.status-badge.review { background: oklch(90% 0.05 250); color: oklch(45% 0.12 250); }
+.status-badge.review { background: color-mix(in oklab, var(--text) 20%, var(--surface)); color: var(--text); }
 .status-badge.done { background: var(--teal-light); color: var(--teal); }
 
 /* tag colors */
-.tag-discovery { background: oklch(92% 0.06 195); color: oklch(35% 0.1 195); }
-.tag-strategy { background: oklch(92% 0.06 280); color: oklch(40% 0.12 280); }
-.tag-execution { background: var(--amber-light); color: oklch(45% 0.12 60); }
-.tag-stakeholders { background: oklch(92% 0.06 320); color: oklch(40% 0.1 320); }
-.tag-data { background: oklch(90% 0.05 250); color: oklch(40% 0.12 250); }
-.tag-leadership { background: oklch(92% 0.04 40); color: oklch(40% 0.1 40); }
+.tag-discovery { background: color-mix(in oklab, var(--text) 8%, var(--surface)); color: var(--text); }
+.tag-strategy { background: color-mix(in oklab, var(--text) 16%, var(--surface)); color: var(--text); }
+.tag-execution { background: color-mix(in oklab, var(--text) 24%, var(--surface)); color: var(--text); }
+.tag-stakeholders { background: color-mix(in oklab, var(--text) 32%, var(--surface)); color: var(--text); }
+.tag-data { background: color-mix(in oklab, var(--text) 42%, var(--surface)); color: var(--text); }
+.tag-leadership { background: var(--text); color: var(--on-accent); }
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {

@@ -102,7 +102,7 @@ export const APP_MARKUP = `
   </div>
   <div class="landing-right">
     <div class="auth-card">
-      <h2 class="auth-card-heading" style="font-family:'Instrument Serif',serif">Get started free</h2>
+      <h2 class="auth-card-heading">Get started free</h2>
       <p class="auth-card-sub">No credit card required.</p>
       <button class="auth-btn" data-provider="Google">
         <img src="https://cdn.simpleicons.org/google" alt="Google" width="20" height="20">
@@ -117,7 +117,7 @@ export const APP_MARKUP = `
         Continue with X
       </button>
       <div class="auth-divider">or</div>
-      <button class="auth-btn" style="justify-content:center;background:var(--teal);border-color:var(--teal);color:#fff;" onclick="doAuth('Email')">
+      <button class="auth-btn" style="justify-content:center;background:var(--teal);border-color:var(--teal);color:var(--on-accent);" onclick="doAuth('Email')">
         Continue with email
       </button>
       <p class="auth-terms">By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
@@ -224,7 +224,7 @@ export const APP_MARKUP = `
         <div class="org-mock-card" id="join-mock">
           <div class="org-mock-name">Acme Corp</div>
           <div class="org-mock-meta">12 PMs · Enterprise · San Francisco</div>
-          <button class="org-btn" style="margin-top:12px;background:var(--teal);color:#fff;padding:8px 16px;font-size:13px" onclick="goTo('org-onboarding')">Request to Join</button>
+          <button class="org-btn" style="margin-top:12px;background:var(--teal);color:var(--on-accent);padding:8px 16px;font-size:13px" onclick="goTo('org-onboarding')">Request to Join</button>
         </div>
       </div>
     </div>

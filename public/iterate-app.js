@@ -301,10 +301,10 @@ function buildMapNodes() {
 
 function nodeColor(mastery, isDark) {
   const d = isDark || document.documentElement.dataset.theme === 'dark';
-  if (mastery === 'center') return d ? '#01696f' : '#01696f';
-  if (mastery === 'strong') return '#01696f';
-  if (mastery === 'developing') return '#d97706';
-  return d ? '#555' : '#9ca3af';
+  if (mastery === 'center') return d ? '#f5f5f7' : '#1d1d1f';
+  if (mastery === 'strong') return d ? '#f5f5f7' : '#1d1d1f';
+  if (mastery === 'developing') return d ? '#a1a1a6' : '#6e6e73';
+  return d ? '#48484a' : '#c7c7cc';
 }
 
 function animateMap() {
@@ -321,7 +321,7 @@ function drawMap(ctx, canvas) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Background
-  ctx.fillStyle = dark ? '#0d0d0d' : '#f7f6f2';
+  ctx.fillStyle = dark ? '#000000' : '#f5f5f7';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // Draw connections center → nodes
@@ -359,8 +359,8 @@ function drawAnimatedLine(ctx, x1, y1, x2, y2, dark, thin=false) {
 
 function drawNode(ctx, node, dark, small) {
   const color = nodeColor(node.mastery, dark);
-  const textColor = dark ? '#f0f0f0' : '#1a1a1a';
-  const bgColor = dark ? '#1a1a1a' : '#ffffff';
+  const textColor = dark ? '#f5f5f7' : '#1d1d1f';
+  const bgColor = dark ? '#1d1d1f' : '#ffffff';
 
   ctx.save();
   // Shadow
@@ -398,18 +398,20 @@ function drawNode(ctx, node, dark, small) {
   }
 
   // Label
-  ctx.fillStyle = node.id === 'center' ? '#fff' : textColor;
+  const onCenter = dark ? '#1d1d1f' : '#ffffff';
+  ctx.fillStyle = node.id === 'center' ? onCenter : textColor;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
 
+  const fontStack = '-apple-system, BlinkMacSystemFont, system-ui';
   if (node.id === 'center') {
-    ctx.font = `bold 11px Satoshi, system-ui`;
+    ctx.font = `600 11px ${fontStack}`;
     ctx.fillText(node.label, node.x, node.y - 7);
-    ctx.font = `10px Satoshi, system-ui`;
-    ctx.fillStyle = 'rgba(255,255,255,0.8)';
+    ctx.font = `10px ${fontStack}`;
+    ctx.fillStyle = dark ? 'rgba(29,29,31,0.7)' : 'rgba(255,255,255,0.8)';
     ctx.fillText(node.sublabel, node.x, node.y + 7);
   } else {
-    ctx.font = `${small ? '10' : '11'}px Satoshi, system-ui`;
+    ctx.font = `${small ? '10' : '11'}px ${fontStack}`;
     ctx.fillStyle = textColor;
     ctx.fillText(node.label, node.x, node.y);
   }
